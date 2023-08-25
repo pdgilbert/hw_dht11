@@ -18,7 +18,7 @@ installed in a wall and is not easily changed.
 
 Relative to https://github.com/pdgilbert/rust-integration-testing/examples/rtic/dht_rtic:
 - there is no attempt to generalized for many MCU devices.
-- released versions of crates are used, rather git versions.
+- released versions of crates are used, rather than git versions.
 - code is in scr/main.rs rather than examples/.
 
 In my on-going projects the DHT-11 sensor has been abandoned in favour of other sensors such as AHT-10.
@@ -91,7 +91,16 @@ August 25, 2023
     power. 
     Also, the build gives a few `variable does not need to be mutable` warnings. This is
     because of a small difference between bluepill and blackpill hals.
-    
+
+August 26, 2023 
+  - Power stability on blackpill stm32f401 became a problem after awhile. Not sure if
+    this is a bad breadboard connection or damage to the blackpill. The problem
+    is when battery power is connected to 3v3 or 5v pins. The symptom is the blackpill
+    and/or the DHT does not get enough power. Then either the blackpill does not boot
+    or the stalls waiting for data from the DHT. There is no problem using dongle power
+    or when 5v battery power is connected to the dongle power pins.
+
+  - Humidity readings with 3.2v power seem to be less accurate than with 5v power.    
 
 
 ## License
