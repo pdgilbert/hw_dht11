@@ -65,16 +65,16 @@ cargo  run --target $TARGET --features $HAL,$MCU  --release
 
 ## Hardware
 
-`VCC` for both the DHT-10 and SSD OLED display use `3.3`v from the bluepill/blackpill board.
+`VCC` for both the DHT-11 and SSD OLED display use `3.3`v from the bluepill/blackpill board.
 This works when the unit is powered by 5v from the programming dongle and when it is powered 
 by 5v (lithium ion) battery to a `5v` pin on the bluepill/blackpill board.
 It also works when powered by 3.2v LiFePO4 battery to a `3v3` pin on the bluepill/blackpill board.
 Note that 5v power uses the bluepill/blackpill on board regulator to power the 3.3v DHT and OLED.
 Adding anything else may stress the regulator. A 3.2v supply does not use the regulator.
 
-The DHT-10 data pin is connected to pin `A8` on the bluepill/blackpill and has a `10K` pull up resistor.
-The DHT-10 `GND` pin is connect to `G` on the bluepill/blackpill. 
-(Only 3 of 4 pins on the DHT-10 are used.)
+The DHT data pin is connected to pin `A8` on the bluepill/blackpill and has a `10K` pull up resistor.
+The DHT `GND` pin is connect to `G` on the bluepill/blackpill. 
+(Only 3 of 4 pins on the DHT are used.)
 
 The display `I2C` interface uses the bluepill/blackpill I2C1 interface. 
 On both bluepill and blackpill the DHT `SCK` is connected to pin `B8` and the DHT `SDA` to pin `B9`.
@@ -94,13 +94,18 @@ August 25, 2023
 
 August 26, 2023 
   - Power stability on blackpill stm32f401 became a problem after awhile. Not sure if
-    this is a bad breadboard connection or damage to the blackpill. The problem
-    is when battery power is connected to 3v3 or 5v pins. The symptom is the blackpill
-    and/or the DHT does not get enough power. Then either the blackpill does not boot
-    or the stalls waiting for data from the DHT. There is no problem using dongle power
-    or when 5v battery power is connected to the dongle power pins.
+    this is a bad breadboard connection or damage to the blackpill, possibly caused by
+    switching power connections and 3v vs 5v and a low battery during testing. Dongle 
+    power and 3v3 power remain good (at least with properly charged battery).
+    The problem is when 5v battery power is connected to a 5v pin. The symptom is the 
+    blackpill and/or the DHT does not get enough power. Then either the blackpill does
+    not boot or stalls waiting for data from the DHT. 
+    I may have blown the onboard 3.3v regulator.
 
   - Humidity readings with 3.2v power seem to be less accurate than with 5v power.    
+    Testing of this on the blackpill has not been possible because of the above problem.
+    Bluepill measurements are better on 5v power.
+    Blackpill on 3.2v power gives measurements close to those on bluepill 3.2v power.
 
 
 ## License
